@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class HomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public String home(ModelMap model, @RequestParam("q") String q) {
     public String home(ModelMap model) {
-        model.addAttribute("message", "hello");
+        model.addAttribute("message", "test");
         return "home";
     }
 }
