@@ -1,5 +1,8 @@
 <html>
 <body>
-    <h1>Message : ${message}</h1>   
+	<form method="get">
+		<input name="q" placeholder="">
+		<input type="submit" value="search">
+	</form>
 </body>
 </html>
