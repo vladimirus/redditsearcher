@@ -5,7 +5,7 @@ The searcher for the front page of the Internet
 
 ===
 
-[![Build Status](http://adapter.afterburna.com/jenkins/job/redditsearcher/badge/icon)](http://adapter.afterburna.com/jenkins/job/redditsearcher/)
+[![Build Status](http://adapter.afterburna.com/jenkins/buildStatus/icon?job=redditsearcher)](http://adapter.afterburna.com/jenkins/job/redditsearcher/)
 
 ### To build:
 
