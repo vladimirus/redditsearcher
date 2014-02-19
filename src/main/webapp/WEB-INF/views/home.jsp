@@ -7,7 +7,7 @@
 	</form>
 	<c:forEach var="link" items="${links}">
 	   <div>
-	       ${link}
+	       <a href="${link.uri}">${link.text}</a>
 	   </div>
 	</c:forEach>
 </body>
