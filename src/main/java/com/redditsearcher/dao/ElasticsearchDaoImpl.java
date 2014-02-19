@@ -2,7 +2,7 @@ package com.redditsearcher.dao;
 
 import java.util.List;
 
-import static org.elasticsearch.index.query.QueryBuilders.fieldQuery;
+import static org.elasticsearch.index.query.QueryBuilders.simpleQueryString;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,7 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
     @Override
     public List<Link> search(String query) {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
-            .withQuery(fieldQuery("text", query))
+            .withQuery(simpleQueryString(query))
             .build();
 
         Page<ElasticLink> elasticLinks = elasticsearchTemplate.queryForPage(searchQuery, ElasticLink.class);
