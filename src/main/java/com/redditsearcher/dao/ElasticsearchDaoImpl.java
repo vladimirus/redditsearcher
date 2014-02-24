@@ -35,11 +35,11 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
 
     @Override
     public List<Link> search(String query) {
-        String scriptRecency = "(0.08 / ((3.16*pow(10,-11)) * abs(currenttimeinmillis - doc['created'].date.getMillis()) + 0.05)) + 1.0";
+        String scriptRecency = "(0.08 / ((3.16*pow(10,-11)) * abs(currentTimeInMillis - doc['created'].date.getMillis()) + 0.05)) + 1.0";
         String scriptRating = "doc['rating'].value";
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("currenttimeinmillis", (Long) new Date().getTime());
+        params.put("currentTimeInMillis", (Long) new Date().getTime());
 
         FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchQuery("text", query)
                 .type(Type.BOOLEAN)
