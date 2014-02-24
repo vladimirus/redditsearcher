@@ -13,6 +13,8 @@ import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.index.query.MatchQueryBuilder.Type;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
+import org.elasticsearch.search.sort.SortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,9 +48,12 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
                 .add(ScoreFunctionBuilders.scriptFunction(scriptRecency, params))
                 .add(ScoreFunctionBuilders.scriptFunction(scriptRating));
 
+        SortBuilder sortBuilder = SortBuilders.scoreSort();
+
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(functionScoreQueryBuilder)
                 .withPageable(new PageRequest(0, 100))
+                .withSort(sortBuilder)
                 .build();
 
         Page<ElasticLink> elasticLinks = elasticsearchTemplate.queryForPage(searchQuery, ElasticLink.class);
