@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.index.query.MatchQueryBuilder.Type;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
@@ -28,6 +29,8 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
     ElasticsearchConverter elasticsearchConverter;
     @Autowired
     ElasticsearchTemplate elasticsearchTemplate;
+
+    private final transient Logger log = Logger.getLogger(this.getClass());
 
     @Override
     public List<Link> search(String query) {
@@ -51,6 +54,18 @@ public class ElasticsearchDaoImpl implements ElasticsearchDao {
         Page<ElasticLink> elasticLinks = elasticsearchTemplate.queryForPage(searchQuery, ElasticLink.class);
         List<Link> links = elasticsearchConverter.convertList(elasticLinks.getContent());
 
+        if (log.isDebugEnabled()) {
+            debug(elasticLinks.getContent());
+        }
+
         return links;
+    }
+
+    private void debug(List<ElasticLink> links) {
+        log.debug("#### Got " + links.size() + " results: ");
+        for (ElasticLink link : links) {
+            log.debug(link.toString());
+        }
+        log.debug("#### End ");
     }
 }
