@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.redditsearcher.model.Link;
 
-public interface ElasticsearchDao {
+public interface SearchDao {
 
     List<Link> search(String query);
 }

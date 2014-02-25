@@ -8,18 +8,18 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.redditsearcher.dao.ElasticsearchDao;
+import com.redditsearcher.dao.SearchDao;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ElasticsearchManagerImplTest {
     private ElasticsearchManagerImpl manager;
     @Mock
-    private ElasticsearchDao elasticsearchDao;
+    private SearchDao searchDao;
 
     @Before
     public void before() {
         this.manager = new ElasticsearchManagerImpl();
-        this.manager.elasticsearchDao = elasticsearchDao;
+        this.manager.searchDao = searchDao;
     }
 
     @Test
@@ -29,7 +29,7 @@ public class ElasticsearchManagerImplTest {
         manager.search("test");
 
         // then
-        verify(elasticsearchDao).search("test");
+        verify(searchDao).search("test");
 
     }
 }

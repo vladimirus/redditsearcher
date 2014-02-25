@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
 import com.redditsearcher.model.Link;
 
 @Repository
-public class ElasticsearchDaoImpl implements ElasticsearchDao {
+public class ElasticsearchDaoImpl implements SearchDao {
     @Autowired
     ElasticsearchConverter elasticsearchConverter;
     @Autowired
