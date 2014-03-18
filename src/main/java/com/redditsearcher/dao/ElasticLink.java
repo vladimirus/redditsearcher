@@ -8,6 +8,7 @@ import org.springframework.data.elasticsearch.annotations.Document;
 public class ElasticLink {
     private String id;
     private String uri;
+    private String commentsUri;
     private Integer rating;
     private String text;
     private Date created;
@@ -66,5 +67,13 @@ public class ElasticLink {
         return "ElasticLink [id=" + id + ", uri=" + uri + ", rating=" + rating
                 + ", text=" + text + ", created=" + created + ", updated="
                 + updated + "]";
+    }
+
+    public String getCommentsUri() {
+        return commentsUri;
+    }
+
+    public void setCommentsUri(String commentsUri) {
+        this.commentsUri = commentsUri;
     }
 }
