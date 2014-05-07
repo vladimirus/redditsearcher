@@ -19,7 +19,8 @@
         <skipCheckstyle>false</skipCheckstyle>
         <skipSite>false</skipSite>
 
-        <checkstyle.config.location>${main.basedir}/build/rules/checkstyle_rules.xml</checkstyle.config.location>
+        <checkstyle.config.dir>${main.basedir}/build/rules</checkstyle.config.dir>
+        <checkstyle.config.location>${checkstyle.config.dir}/checkstyle_rules.xml</checkstyle.config.location>
 
         <spring.version>3.2.5.RELEASE</spring.version>
     </properties>
@@ -62,6 +63,7 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
@@ -154,7 +156,7 @@
                 <version>2.9.1</version>
                 <configuration>
                     <configLocation>${checkstyle.config.location}</configLocation>
-                    <propertyExpansion>samedir=${checkstyle.basedir}</propertyExpansion>
+                    <propertyExpansion>samedir=${checkstyle.config.dir}</propertyExpansion>
                     <failsOnError>true</failsOnError>
                     <skip>${skipCheckstyle}</skip>
                     <consoleOutput>true</consoleOutput>
