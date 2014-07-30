@@ -1,13 +1,9 @@
 package com.redditsearcher.dao;
 
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.redditsearcher.model.Link;
 import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
 import org.elasticsearch.index.query.MatchQueryBuilder.Type;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
@@ -22,7 +18,10 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
 
-import com.redditsearcher.model.Link;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Repository
 public class ElasticsearchDaoImpl implements SearchDao {
@@ -41,7 +40,7 @@ public class ElasticsearchDaoImpl implements SearchDao {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("currentTimeInMillis", (Long) new Date().getTime());
 
-        FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchQuery("text", query)
+        FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchPhraseQuery("text", query)
                 .type(Type.BOOLEAN)
                 .operator(Operator.AND))
                 .add(ScoreFunctionBuilders.scriptFunction(scriptRecency, params))
