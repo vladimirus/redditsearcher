@@ -1,9 +1,10 @@
 package com.redditsearcher.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.redditsearcher.dao.ElasticLink;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -21,6 +22,7 @@ public final class DomainFactory {
         link.setRating(10);
         link.setText("Some text");
         link.setId("this-is-id");
+        link.setCreated(new Date());
         return link;
     }
 
