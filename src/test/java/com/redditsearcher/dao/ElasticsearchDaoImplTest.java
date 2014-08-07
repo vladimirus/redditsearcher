@@ -6,8 +6,6 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +13,10 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.FacetedPage;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
+
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ElasticsearchDaoImplTest {
@@ -48,5 +49,15 @@ public class ElasticsearchDaoImplTest {
         // then
         verify(elasticsearchTemplate).queryForPage(isA(SearchQuery.class), any(Class.class));
         verify(elasticsearchConverter).convertList(elasticLinks);
+    }
+
+    @Test
+    public void delete() {
+
+        // when
+        dao.delete("1");
+
+        // then
+        verify(elasticsearchTemplate).delete(isA(DeleteQuery.class));
     }
 }

@@ -80,6 +80,8 @@ public class ElasticsearchDaoImpl implements SearchDao {
     public void delete(String id) {
         DeleteQuery deleteQuery = new DeleteQuery();
         deleteQuery.setQuery(matchQuery("id", id));
+        deleteQuery.setIndex("link");
+        deleteQuery.setType("elasticlink");
         elasticsearchTemplate.delete(deleteQuery);
     }
 }
