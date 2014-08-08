@@ -1,7 +1,6 @@
 package com.redditsearcher.dao;
 
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
-import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 import com.redditsearcher.model.Link;
@@ -43,7 +42,7 @@ public class ElasticsearchDaoImpl implements SearchDao {
         Map<String, Object> params = new HashMap<>();
         params.put("currentTimeInMillis", new Date().getTime());
 
-        FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchPhraseQuery("text", query)
+        FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchQuery("text", query)
                 .type(Type.BOOLEAN)
                 .operator(Operator.AND))
                 .add(ScoreFunctionBuilders.scriptFunction(scriptRecency, params))
@@ -74,7 +73,7 @@ public class ElasticsearchDaoImpl implements SearchDao {
     }
 
     /**
-     * This is for intergation test.
+     * This is for integration tests.
      * @param id - to delete.
      */
     public void delete(String id) {
@@ -83,5 +82,12 @@ public class ElasticsearchDaoImpl implements SearchDao {
         deleteQuery.setIndex("link");
         deleteQuery.setType("elasticlink");
         elasticsearchTemplate.delete(deleteQuery);
+    }
+
+    /**
+     * This is for integration tests.
+     */
+    public void refresh() {
+        elasticsearchTemplate.refresh("link", true);
     }
 }

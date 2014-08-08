@@ -1,9 +1,9 @@
 package com.redditsearcher.integration;
 
 import static com.redditsearcher.model.DomainFactory.anElasticLink;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.elasticsearch.common.util.concurrent.Uninterruptibles.sleepUninterruptibly;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 
 import com.redditsearcher.dao.ElasticLink;
@@ -11,7 +11,6 @@ import com.redditsearcher.dao.ElasticsearchDaoImpl;
 import com.redditsearcher.model.Link;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,18 +47,30 @@ public class ElasticSearchIT {
     }
 
     @Test
-    @Ignore
-    public void simpleWordSearch() {
+    public void shouldFind() {
         // given
         elasticLink.setText("this is some text");
         searchDao.save(elasticLink);
 
         // when
-        sleepUninterruptibly(1, SECONDS);
-        List<Link> links = searchDao.search("som");
+        searchDao.refresh();
+        List<Link> links = searchDao.search("aa thi tex som");
 
         // then
-        assertThat(links.size(), is(1));
+        assertThat(links, hasSize(1));
     }
 
+    @Test
+    public void shouldNotFind() {
+        // given
+        elasticLink.setText("this is some text");
+        searchDao.save(elasticLink);
+
+        // when
+        searchDao.refresh();
+        List<Link> links = searchDao.search("aa thi tes som");
+
+        // then
+        assertThat(links, is(empty()));
+    }
 }

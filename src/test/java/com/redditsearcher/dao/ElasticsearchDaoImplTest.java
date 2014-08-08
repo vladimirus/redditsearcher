@@ -60,4 +60,14 @@ public class ElasticsearchDaoImplTest {
         // then
         verify(elasticsearchTemplate).delete(isA(DeleteQuery.class));
     }
+
+    @Test
+    public void refresh() {
+
+        // when
+        dao.refresh();
+
+        // then
+        verify(elasticsearchTemplate).refresh("link", true);
+    }
 }
