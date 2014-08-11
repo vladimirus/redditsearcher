@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--suppress ALL -->
-<web-app xmlns="http://java.sun.com/xml/ns/javaee"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 version="2.5">
 
     <display-name>redditsearcher</display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
+        <!--suppress XmlPathReference -->
         <param-value>/WEB-INF/classes/appCtx/*.xml</param-value>
     </context-param>
     
@@ -24,9 +24,33 @@ version="2.5">
             <param-value>true</param-value>
         </init-param>
     </filter>
-    
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>instrumentedFilter</filter-name>
+        <filter-class>com.redditsearcher.web.metrics.MyInstrumentedFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>instrumentedFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.redditsearcher.web.metrics.HealthContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.redditsearcher.web.metrics.MetricsContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.redditsearcher.web.metrics.MyInstrumentedFilterContextListener</listener-class>
     </listener>
 
     <servlet>
@@ -34,9 +58,55 @@ version="2.5">
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.AdminServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>ping</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.PingServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>healthcheck</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.HealthCheckServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>metrics</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>threads</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.ThreadDumpServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>searcher</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/_admin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ping</servlet-name>
+        <url-pattern>/_admin/ping</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>healthcheck</servlet-name>
+        <url-pattern>/_admin/healthcheck</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>metrics</servlet-name>
+        <url-pattern>/_admin/metrics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>threads</servlet-name>
+        <url-pattern>/_admin/threads</url-pattern>
     </servlet-mapping>
 </web-app>
