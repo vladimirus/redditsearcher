@@ -21,7 +21,7 @@
 			  <div class="col-md-12">
 				  <form role="form" method="get">
 				    <div class="input-group">
-				      <input name="q" class="form-control">
+                        <input name="q" class="form-control" value="${query}">
 				      <span class="input-group-btn">
 				        <button class="btn btn-default" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
@@ -41,7 +41,7 @@
 	    </div>
 
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     </body>
 </html>

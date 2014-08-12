@@ -25,6 +25,7 @@ public class HomeController {
     public String home(ModelMap model, @RequestParam("q") String q) {
         List<Link> links = searchManager.search(q);
         model.addAttribute("links", links);
+        model.addAttribute("query", q);
         return "home";
     }
 }
