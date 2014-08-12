@@ -68,7 +68,7 @@ public class ElasticSearchIT {
 
         // when
         searchDao.refresh();
-        List<Link> links = searchDao.search("aa thi tes som vovatest");
+        List<Link> links = searchDao.search("aa thi tes som vovatext");
 
         // then
         assertThat(links, is(empty()));
