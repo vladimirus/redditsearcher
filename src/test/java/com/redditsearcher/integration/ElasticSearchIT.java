@@ -49,12 +49,12 @@ public class ElasticSearchIT {
     @Test
     public void shouldFind() {
         // given
-        elasticLink.setText("this is some text");
+        elasticLink.setText("this is some text it vovatest");
         searchDao.save(elasticLink);
 
         // when
         searchDao.refresh();
-        List<Link> links = searchDao.search("aa thi tex som");
+        List<Link> links = searchDao.search("aa thi tex som vovatest");
 
         // then
         assertThat(links, hasSize(1));
@@ -68,7 +68,7 @@ public class ElasticSearchIT {
 
         // when
         searchDao.refresh();
-        List<Link> links = searchDao.search("aa thi tes som");
+        List<Link> links = searchDao.search("aa thi tes som vovatest");
 
         // then
         assertThat(links, is(empty()));
