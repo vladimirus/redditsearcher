@@ -63,7 +63,7 @@ public class ElasticSearchIT {
     @Test
     public void shouldNotFind() {
         // given
-        elasticLink.setText("this is some text");
+        elasticLink.setText("this is some text vovatest");
         searchDao.save(elasticLink);
 
         // when
