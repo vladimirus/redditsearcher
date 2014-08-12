@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"
+        %>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -9,11 +10,14 @@
         <link rel="stylesheet" href="resources/css/app.css">
     </head>
 	<body>
-	    <div class="container">
-            <div class="row">
+
+    <div class="container">
+
+        <div class="row">
                 <h1 class="text-center">reddit searcher</h1>
             </div>
-			<div class="row">
+
+        <div class="row">
 			  <div class="col-md-12">
 				  <form role="form" method="get">
 				    <div class="input-group">
@@ -27,15 +31,17 @@
 				  </form>
 			  </div>
 			</div>
-            <c:forEach var="link" items="${links}" varStatus="status">
-                <div class="row<c:if test='${status.index == 0}'> spacer</c:if>">
-                    <div class="col-md-12">
+        <c:forEach var="link" items="${links}" varStatus="status">
+            <div class="row<c:if test='${status.index == 0}'> spacer</c:if>">
+                <div class="col-md-12">
                     <p><a href="${link.uri}">${link.text}</a></p>
-                    </div>
                 </div>
-            </c:forEach>
+            </div>
+        </c:forEach>
 	    </div>
-        <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
     </body>
 </html>
