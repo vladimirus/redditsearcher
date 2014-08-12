@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="resources/css/app.css">
     </head>
 	<body>
 	    <div class="container">
@@ -26,10 +27,10 @@
 				  </form>
 			  </div>
 			</div>
-			<c:forEach var="link" items="${links}">
-                <div class="row">
+            <c:forEach var="link" items="${links}" varStatus="status">
+                <div class="row<c:if test='${status.index == 0}'> spacer</c:if>">
                     <div class="col-md-12">
-                        <p><a href="${link.uri}">${link.text}</a></p>
+                    <p><a href="${link.uri}">${link.text}</a></p>
                     </div>
                 </div>
             </c:forEach>

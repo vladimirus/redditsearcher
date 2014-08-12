@@ -27,7 +27,7 @@ import java.util.List;
 public class ElasticSearchIT {
 
     @Autowired
-    private ElasticsearchDaoImpl searchDao;
+    private ElasticsearchDaoImpl elasticsearchDao;
 
     private ElasticLink elasticLink;
 
@@ -38,7 +38,7 @@ public class ElasticSearchIT {
 
     @After
     public void after() {
-        searchDao.delete(elasticLink.getId());
+        elasticsearchDao.delete(elasticLink.getId());
     }
 
     @Test
@@ -50,11 +50,11 @@ public class ElasticSearchIT {
     public void shouldFind() {
         // given
         elasticLink.setText("this is some text it vovatest");
-        searchDao.save(elasticLink);
+        elasticsearchDao.save(elasticLink);
 
         // when
-        searchDao.refresh();
-        List<Link> links = searchDao.search("aa thi tex som vovatest");
+        elasticsearchDao.refresh();
+        List<Link> links = elasticsearchDao.search("aa thi tex som vovatest");
 
         // then
         assertThat(links, hasSize(1));
@@ -64,11 +64,11 @@ public class ElasticSearchIT {
     public void shouldNotFind() {
         // given
         elasticLink.setText("this is some text vovatest");
-        searchDao.save(elasticLink);
+        elasticsearchDao.save(elasticLink);
 
         // when
-        searchDao.refresh();
-        List<Link> links = searchDao.search("aa thi tes som vovatext");
+        elasticsearchDao.refresh();
+        List<Link> links = elasticsearchDao.search("aa thi tes som vovatext");
 
         // then
         assertThat(links, is(empty()));
