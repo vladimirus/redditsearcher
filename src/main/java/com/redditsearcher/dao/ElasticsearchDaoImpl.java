@@ -1,6 +1,7 @@
 package com.redditsearcher.dao;
 
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
+import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 import com.redditsearcher.model.Link;
@@ -59,6 +60,11 @@ public class ElasticsearchDaoImpl implements SearchDao {
         Page<ElasticLink> elasticLinks = elasticsearchTemplate.queryForPage(searchQuery, ElasticLink.class);
 
         return elasticsearchConverter.convertList(elasticLinks.getContent());
+    }
+
+    @Override
+    public long countAll() {
+        return elasticsearchTemplate.count(new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build());
     }
 
     /**

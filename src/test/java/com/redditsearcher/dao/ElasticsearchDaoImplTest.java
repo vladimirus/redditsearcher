@@ -70,4 +70,14 @@ public class ElasticsearchDaoImplTest {
         // then
         verify(elasticsearchTemplate).refresh("link", true);
     }
+
+    @Test
+    public void countAll() {
+
+        // when
+        dao.countAll();
+
+        // then
+        verify(elasticsearchTemplate).count(isA(SearchQuery.class));
+    }
 }
