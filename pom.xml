@@ -22,7 +22,7 @@
         <checkstyle.config.dir>${main.basedir}/build/rules</checkstyle.config.dir>
         <checkstyle.config.location>${checkstyle.config.dir}/checkstyle_rules.xml</checkstyle.config.location>
 
-        <spring.version>3.2.5.RELEASE</spring.version>
+        <spring.version>4.1.1.RELEASE</spring.version>
         <metrics.version>3.0.1</metrics.version>
     </properties>
 
