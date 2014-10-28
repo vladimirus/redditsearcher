@@ -15,7 +15,8 @@
     <elasticsearch:repositories base-package="com.redditsearcher.dao.elasticsearch.repository"/>
     -->
 
-    <elasticsearch:transport-client id="client" cluster-nodes="localhost:9300" client-transport-ping-timeout="10s"/>
+    <elasticsearch:transport-client id="client" cluster-nodes="${es.cluster-nodes}"
+                                    client-transport-ping-timeout="10s"/>
 
     <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
         <constructor-arg name="client" ref="client"/>
