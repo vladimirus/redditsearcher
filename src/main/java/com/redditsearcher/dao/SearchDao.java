@@ -2,11 +2,11 @@ package com.redditsearcher.dao;
 
 import com.redditsearcher.model.Link;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface SearchDao {
 
-    List<Link> search(String query);
+    Collection<Link> search(String query);
 
     long countAll();
 }

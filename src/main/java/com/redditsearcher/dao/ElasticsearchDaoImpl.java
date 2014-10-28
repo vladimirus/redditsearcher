@@ -21,9 +21,9 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -36,7 +36,7 @@ public class ElasticsearchDaoImpl implements SearchDao {
 //    private final transient Logger log = Logger.getLogger(this.getClass());
 
     @Override
-    public List<Link> search(String query) {
+    public Collection<Link> search(String query) {
         String scriptRecency = "(0.08 / ((3.16*pow(10,-11)) * abs(currentTimeInMillis - doc['created'].date.getMillis()) + 0.05)) + 1.0";
         String scriptRating = "doc['rating'].value";
 
@@ -69,6 +69,7 @@ public class ElasticsearchDaoImpl implements SearchDao {
 
     /**
      * This is only for integration test.
+     *
      * @param elasticLink - link to save
      */
     public void save(ElasticLink elasticLink) {
@@ -80,6 +81,7 @@ public class ElasticsearchDaoImpl implements SearchDao {
 
     /**
      * This is for integration tests.
+     *
      * @param id - to delete.
      */
     public void delete(String id) {

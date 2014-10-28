@@ -1,15 +1,17 @@
 package com.redditsearcher.dao;
 
-import static com.redditsearcher.model.DomainFactory.anElasticLink;
+import static com.google.common.collect.Iterables.getFirst;
 import static com.redditsearcher.model.DomainFactory.aListOfElasticLink;
-import static org.junit.Assert.assertEquals;
+import static com.redditsearcher.model.DomainFactory.anElasticLink;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertThat;
 
-import java.util.List;
-
+import com.redditsearcher.model.Link;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.redditsearcher.model.Link;
+import java.util.Collection;
 
 public class ElasticsearchConverterTest {
     private ElasticsearchConverter converter;
@@ -28,21 +30,22 @@ public class ElasticsearchConverterTest {
         Link actualLink = converter.convert(elasticLink);
 
         // then
-        assertEquals("Some text", actualLink.getText());
-        assertEquals("http://example.com", actualLink.getUri());
+        assertThat(actualLink.getText(), equalTo("Some text"));
+        assertThat(actualLink.getUri(), equalTo("http://example.com"));
+        assertThat(actualLink.getRating(), equalTo(100));
     }
 
     @Test
     public void shouldConvertMany() {
         // given
-        List<ElasticLink> elasticLinks = aListOfElasticLink(10);
+        Collection<ElasticLink> elasticLinks = aListOfElasticLink(10);
 
         // when
-        List<Link> actualLinks = converter.convertList(elasticLinks);
+        Collection<Link> actualLinks = converter.convertList(elasticLinks);
 
         // then
-        assertEquals(Integer.valueOf(10), (Integer) actualLinks.size());
-        assertEquals("Some text", actualLinks.get(0).getText());
-        assertEquals("http://example.com", actualLinks.get(0).getUri());
+        assertThat(actualLinks, hasSize(10));
+        assertThat(getFirst(actualLinks, null).getText(), equalTo("Some text"));
+        assertThat(getFirst(actualLinks, null).getUri(), equalTo("http://example.com"));
     }
 }

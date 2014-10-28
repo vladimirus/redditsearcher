@@ -30,7 +30,7 @@
     <c:forEach var="link" items="${links}" varStatus="status">
         <div class="row<c:if test='${status.index == 0}'> spacer</c:if>">
             <div class="col-md-12">
-                <p><a href="${link.uri}">${link.text}</a></p>
+                <p><a href="${link.uri}">${link.text}</a> (${link.rating})</p>
             </div>
         </div>
     </c:forEach>

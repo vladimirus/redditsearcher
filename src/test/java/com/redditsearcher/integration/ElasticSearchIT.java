@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * Integration test for elasticsearch instance.
@@ -54,7 +54,7 @@ public class ElasticSearchIT {
 
         // when
         elasticsearchDao.refresh();
-        List<Link> links = elasticsearchDao.search("aa thi tex som vovatest");
+        Collection<Link> links = elasticsearchDao.search("aa thi tex som vovatest");
 
         // then
         assertThat(links, hasSize(1));
@@ -68,7 +68,7 @@ public class ElasticSearchIT {
 
         // when
         elasticsearchDao.refresh();
-        List<Link> links = elasticsearchDao.search("aa thi tes som vovatext");
+        Collection<Link> links = elasticsearchDao.search("aa thi tes som vovatext");
 
         // then
         assertThat(links, is(empty()));

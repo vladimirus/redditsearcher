@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
+import java.util.Collection;
 
 @Controller
 public class HomeController {
@@ -23,7 +23,7 @@ public class HomeController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET, params = "q")
     public String home(ModelMap model, @RequestParam("q") String q) {
-        List<Link> links = searchManager.search(q);
+        Collection<Link> links = searchManager.search(q);
         model.addAttribute("links", links);
         model.addAttribute("query", q);
         return "home";

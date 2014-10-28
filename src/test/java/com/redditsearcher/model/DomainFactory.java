@@ -1,8 +1,9 @@
 package com.redditsearcher.model;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import com.redditsearcher.dao.ElasticLink;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,11 +24,12 @@ public final class DomainFactory {
         link.setText("Some text");
         link.setId("this-is-id");
         link.setCreated(new Date());
+        link.setRating(100);
         return link;
     }
 
     public static List<ElasticLink> aListOfElasticLink(int numberOfLinks) {
-        List<ElasticLink> list = new ArrayList<>();
+        List<ElasticLink> list = newArrayList();
         for (int i = 0; i < numberOfLinks; i++) {
             ElasticLink link = anElasticLink();
             list.add(link);
