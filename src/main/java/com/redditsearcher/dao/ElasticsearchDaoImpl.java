@@ -1,12 +1,12 @@
 package com.redditsearcher.dao;
 
+import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
+import static org.elasticsearch.index.query.MatchQueryBuilder.Type.BOOLEAN;
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 
 import com.redditsearcher.model.Link;
-import org.elasticsearch.index.query.MatchQueryBuilder.Operator;
-import org.elasticsearch.index.query.MatchQueryBuilder.Type;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
@@ -44,8 +44,8 @@ public class ElasticsearchDaoImpl implements SearchDao {
         params.put("currentTimeInMillis", new Date().getTime());
 
         FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchQuery("text", query)
-                .type(Type.BOOLEAN)
-                .operator(Operator.AND))
+                .type(BOOLEAN)
+                .operator(AND))
                 .add(ScoreFunctionBuilders.scriptFunction(scriptRecency, params))
                 .add(ScoreFunctionBuilders.scriptFunction(scriptRating));
 

@@ -17,7 +17,6 @@ public class ElasticsearchManagerImpl implements SearchManager {
 
     @Override
     public Collection<Link> search(String query) {
-        Collection<Link> links = searchDao.search(query);
-        return links;
+        return searchDao.search(query);
     }
 }
