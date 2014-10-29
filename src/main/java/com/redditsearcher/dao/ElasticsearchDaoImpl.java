@@ -1,14 +1,15 @@
 package com.redditsearcher.dao;
 
+import static com.google.common.collect.Maps.newHashMap;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Type.BOOLEAN;
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
 
 import com.redditsearcher.model.Link;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Repository
@@ -40,14 +40,14 @@ public class ElasticsearchDaoImpl implements SearchDao {
         String scriptRecency = "(0.08 / ((3.16*pow(10,-11)) * abs(currentTimeInMillis - doc['created'].date.getMillis()) + 0.05)) + 1.0";
         String scriptRating = "doc['rating'].value";
 
-        Map<String, Object> params = new HashMap<>();
+        Map<String, Object> params = newHashMap();
         params.put("currentTimeInMillis", new Date().getTime());
 
         FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(matchQuery("text", query)
                 .type(BOOLEAN)
                 .operator(AND))
-                .add(ScoreFunctionBuilders.scriptFunction(scriptRecency, params))
-                .add(ScoreFunctionBuilders.scriptFunction(scriptRating));
+                .add(scriptFunction(scriptRecency, params))
+                .add(scriptFunction(scriptRating));
 
         SortBuilder sortBuilder = SortBuilders.scoreSort();
 
