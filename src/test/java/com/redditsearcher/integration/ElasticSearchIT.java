@@ -42,11 +42,6 @@ public class ElasticSearchIT {
     }
 
     @Test
-    public void dummy() {       //so integration phase doesn't fail without any tests
-        assertThat(true, is(true));
-    }
-
-    @Test
     public void shouldFind() {
         // given
         elasticLink.setText("this is some text it vovatest");
