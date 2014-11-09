@@ -9,9 +9,10 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
 
-import com.redditsearcher.model.Link;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
 
-import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -25,9 +26,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
+import com.redditsearcher.model.Link;
 
 @Repository
 public class ElasticsearchDaoImpl implements SearchDao {
