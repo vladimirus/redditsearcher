@@ -1,16 +1,17 @@
 package com.redditsearcher.dao;
 
 import static com.google.common.collect.Maps.newHashMap;
+import static org.elasticsearch.common.unit.Fuzziness.AUTO;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Type.BOOLEAN;
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
-import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
 
 import com.redditsearcher.model.Link;
+
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -45,9 +46,12 @@ public class ElasticsearchDaoImpl implements SearchDao {
         Map<String, Object> params = newHashMap();
         params.put("currentTimeInMillis", new Date().getTime());
 
-        FunctionScoreQueryBuilder functionScoreQueryBuilder = functionScoreQuery(boolQuery()
-                .must(matchQuery("text", query).type(BOOLEAN).operator(AND))
-                .must(rangeQuery("rating").gte(2)))
+        FunctionScoreQueryBuilder functionScoreQueryBuilder =
+                functionScoreQuery(
+                matchQuery("text", query)
+                    .type(BOOLEAN)
+                    .operator(AND)
+                    .fuzziness(AUTO))
                 .add(scriptFunction(scriptRecency, params))
                 .add(scriptFunction(scriptRating));
 
@@ -60,7 +64,6 @@ public class ElasticsearchDaoImpl implements SearchDao {
                 .build();
 
         Page<ElasticLink> elasticLinks = elasticsearchTemplate.queryForPage(searchQuery, ElasticLink.class);
-
         return elasticsearchConverter.convertList(elasticLinks.getContent());
     }
 

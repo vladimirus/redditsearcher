@@ -17,7 +17,7 @@ public class MyInstrumentedFilter extends InstrumentedFilter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String path = ((HttpServletRequest) request).getRequestURI();
-        if (!path.startsWith("/_admin")) {
+        if (!path.startsWith("/_admin") || !"/".equals(path)) { //ignore and homepage for now, only /search matters
             super.doFilter(request, response, chain);
         } else {
             chain.doFilter(request, response);
