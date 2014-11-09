@@ -63,7 +63,7 @@ public class ElasticSearchIT {
 
         // when
         elasticsearchDao.refresh();
-        Collection<Link> links = elasticsearchDao.search("aa thi tes som vovatext");
+        Collection<Link> links = elasticsearchDao.search("xxxxxxxxx");
 
         // then
         assertThat(links, is(empty()));
