@@ -7,11 +7,10 @@ import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
+import static org.elasticsearch.search.sort.SortBuilders.scoreSort;
 
 import com.redditsearcher.model.Link;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
-import org.elasticsearch.search.sort.SortBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -44,20 +43,14 @@ public class ElasticsearchDaoImpl implements SearchDao {
         params.put("currentTimeInMillis", new Date().getTime());
 
         FunctionScoreQueryBuilder functionScoreQueryBuilder =
-                functionScoreQuery(
-                matchQuery("text", query)
-                    .type(BOOLEAN)
-                        .operator(AND)
-                )
+                functionScoreQuery(matchQuery("text", query).type(BOOLEAN).operator(AND))
                 .add(scriptFunction(scriptRecency, params))
                 .add(scriptFunction(scriptRating));
-
-        SortBuilder sortBuilder = SortBuilders.scoreSort();
 
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(functionScoreQueryBuilder)
                 .withPageable(new PageRequest(0, 100))
-                .withSort(sortBuilder)
+                .withSort(scoreSort())
                 .build();
 
         Page<ElasticLink> elasticLinks = elasticsearchTemplate.queryForPage(searchQuery, ElasticLink.class);
