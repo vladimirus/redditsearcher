@@ -1,7 +1,6 @@
 package com.redditsearcher.dao;
 
 import static com.google.common.collect.Maps.newHashMap;
-import static org.elasticsearch.common.unit.Fuzziness.AUTO;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Operator.AND;
 import static org.elasticsearch.index.query.MatchQueryBuilder.Type.BOOLEAN;
 import static org.elasticsearch.index.query.QueryBuilders.functionScoreQuery;
@@ -9,10 +8,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders.scriptFunction;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-
+import com.redditsearcher.model.Link;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -26,7 +22,9 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Repository;
 
-import com.redditsearcher.model.Link;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Map;
 
 @Repository
 public class ElasticsearchDaoImpl implements SearchDao {
@@ -49,8 +47,8 @@ public class ElasticsearchDaoImpl implements SearchDao {
                 functionScoreQuery(
                 matchQuery("text", query)
                     .type(BOOLEAN)
-                    .operator(AND)
-                    .fuzziness(AUTO))
+                        .operator(AND)
+                )
                 .add(scriptFunction(scriptRecency, params))
                 .add(scriptFunction(scriptRating));
 
