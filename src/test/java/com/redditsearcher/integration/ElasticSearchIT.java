@@ -49,7 +49,7 @@ public class ElasticSearchIT {
 
         // when
         elasticsearchDao.refresh();
-        Collection<Link> links = elasticsearchDao.search("aa thi tex som vovatest");
+        Collection<Link> links = elasticsearchDao.search("this is some text it vovatest");
 
         // then
         assertThat(links, hasSize(1));
